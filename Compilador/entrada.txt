@@ -1,15 +1,12 @@
 <?php
 
-$x = 0;
-$numa = 0;
+$name = readline("Digite seu nome: ");
 
-echo "Entre um número: ";
-$numa = (int)fgets(STDIN);
-
-$x = 10;
-
-if ($numa < 1 || $numa < 2) {
-    echo "Unidade é: ";
-    echo $numa;
+// Verifica se o nome foi informado
+if ($name !== "") {
+	echo "Ola, $name! Prazer em conhece-lo.";
+} else {
+	echo "Voce nao informou seu nome.";
 }
+
 ?>

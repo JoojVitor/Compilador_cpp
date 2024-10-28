@@ -1,10 +1,12 @@
 #include "analisador_lexico.h"
 #include "util.h"
 #include <iostream>
+#include <regex>
+#include <unordered_map>
 
 using namespace std;
 
-bool eh_identificador(const string& palavra) {
+static bool eh_identificador(const string& palavra) {
     regex padrao_identificador(R"(^\$[a-zA-Z_]\w*$)");
     return regex_match(palavra, padrao_identificador);
 }
@@ -13,8 +15,8 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
     vector<vector<string>> tokens;
     unordered_map<string, int> identificadores;
 
-    // Regex para identificar tokens
-    regex padrao_tokens(R"(<\?php|\?>|\$[a-zA-Z_]\w*|=|echo|if|else|\(|\)|;|"[^"\\]*(?:\\.[^"\\]*)*"|\d+)");
+    // Regex para identificar tokens, incluindo operadores relacionais, lógicos, e chaves
+    regex padrao_tokens(R"(<\?php|\?>|\$[a-zA-Z_]\w*|==|=|echo|if|else|readline|\(|\)|;|"[^"\\]*(?:\\.[^"\\]*)*"|\d+|<=|>=|!==|&&|\|\||<|>|!|\+|\-|\*|\/|%|\{|\})");
 
     size_t linha_numero = 0;
     string linha;
@@ -30,21 +32,20 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
 
             // Verificar a categoria da palavra
             if (palavra == "<?php" || palavra == "?>" || palavra == "$" || palavra == "=" ||
-                palavra == "echo" || palavra == "if" || palavra == "else" || palavra == "(" ||
-                palavra == ")" || palavra == ":" || palavra == ";") {
+                palavra == "echo" || palavra == "readline" || palavra == "if" || palavra == "else" || palavra == "(" ||
+                palavra == ")" || palavra == ":" || palavra == ";" || palavra == "{" || palavra == "}") {
                 linha_tokens.push_back("[" + palavra + ", ]");
             }
             else if (palavra.front() == '"' && palavra.back() == '"') {
-                palavra = palavra.substr(1, palavra.size() - 2);
                 linha_tokens.push_back("[fr, " + palavra + "]");
             }
             else if (all_of(palavra.begin(), palavra.end(), ::isdigit)) {
                 linha_tokens.push_back("[nu, " + palavra + "]");
             }
-            else if (palavra == "<" || palavra == ">" || palavra == "<=" || palavra == ">=" || palavra == "==") {
+            else if (palavra == "<" || palavra == ">" || palavra == "<=" || palavra == ">=" || palavra == "==" || palavra == "!==") {
                 linha_tokens.push_back("[ol, " + palavra + "]");
             }
-            else if (palavra == "+" || palavra == "-" || palavra == "*" || palavra == "/") {
+            else if (palavra == "+" || palavra == "-" || palavra == "*" || palavra == "/" || palavra == "%") {
                 linha_tokens.push_back("[om, " + palavra + "]");
             }
             else if (palavra == "&&" || palavra == "||" || palavra == "!") {
@@ -70,20 +71,4 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
     }
 
     return tokens;
-}
-
-void executar()
-{
-    try {
-        string text = ler_arquivo("entrada.txt");
-
-        text = remover_comentarios(text);
-
-        auto tokens = analisador_lexico(text);
-
-        escrever_saida_em_arquivo(tokens);
-    }
-    catch (const exception& e) {
-        cerr << "Erro durante a análise léxica: " << e.what() << endl;
-    }
 }

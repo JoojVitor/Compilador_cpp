@@ -1,5 +1,6 @@
 #include "analisador_lexico.h"
 #include "util.h"
+#include "analisador_sintatico.h"
 
 using namespace std;
 
@@ -11,14 +12,17 @@ int main()
 
 	try
 	{
-		vector<vector<string>> tokens = analisador_lexico(text);
-		escrever_saida_em_arquivo(tokens);
+		escrever_saida_em_arquivo(analisador_lexico(text));
 
-		auto tokens_1 = read_tokens();
+		vector<string> tokens_output = ler_tokens();
+
+        parse_program(tokens_output);
+
+		cout << "Compilado com sucesso!" << endl;
 	}
 	catch (const exception& e)
 	{
-		cout << "Erro durante analise léxica: " << e.what() << endl;
+		cout << "Erro durante compilação: " << e.what() << endl;
 		throw;
 	}
 }

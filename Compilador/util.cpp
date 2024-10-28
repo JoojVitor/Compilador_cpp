@@ -49,7 +49,7 @@ void escrever_saida_em_arquivo(const vector<vector<string>>& tokens, const strin
     }
 }
 
-vector<string> read_tokens() 
+vector<string> ler_tokens() 
 {
     string input_text = ler_arquivo("saida.txt");
     vector<string> tokens;
@@ -70,9 +70,11 @@ vector<string> read_tokens()
         // Dividir a linha em tokens com base no delimitador "] ["
         istringstream line_stream(line);
         string token;
-        while (getline(line_stream, token, ']')) {
+        while (getline(line_stream, token, ']')) 
+        {
             size_t pos = token.find('[');
-            if (pos != string::npos) {
+            if (pos != string::npos) 
+            {
                 token = token.substr(pos + 1);  // Remover colchetes
                 size_t comma_pos = token.find(',');
                 if (comma_pos != string::npos) 

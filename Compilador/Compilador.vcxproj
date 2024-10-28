@@ -128,11 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="analisador_lexico.cpp" />
+    <ClCompile Include="analisador_sintatico.cpp" />
     <ClCompile Include="Compilador.cpp" />
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="analisador_lexico.h" />
+    <ClInclude Include="analisador_sintatico.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
