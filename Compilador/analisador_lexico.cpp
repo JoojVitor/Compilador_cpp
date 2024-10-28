@@ -14,7 +14,7 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
     unordered_map<string, int> identificadores;
 
     // Regex para identificar tokens
-    regex padrao_tokens(R"(<\?php|\?>|\$[a-zA-Z_]\w*|=|echo|if|else|\(|\)|;)");
+    regex padrao_tokens(R"(<\?php|\?>|\$[a-zA-Z_]\w*|=|echo|if|else|\(|\)|;|"[^"\\]*(?:\\.[^"\\]*)*"|\d+)");
 
     size_t linha_numero = 0;
     string linha;
