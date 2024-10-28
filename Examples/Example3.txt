@@ -1,0 +1,12 @@
+<?php
+
+$name = readline("Digite seu nome: ");
+
+// Verifica se o nome foi informado
+if ($name !== "") {
+	echo "Ola, $name! Prazer em conhece-lo.";
+} else {
+	echo "Voce nao informou seu nome.";
+}
+
+?>
