@@ -25,3 +25,5 @@ Baseado no PHP, é uma implementação bem simplificada dos símbolos dessa ling
 
 Versão desenvolvida anteriormente em Python disponível no meu Google Collab:
 https://colab.research.google.com/drive/1rAFwa2rf0bBSPaRP8Zn_psW5D3H6gmPX#scrollTo=sqflnZLbZFxU
+
+By João Vitor Couto
