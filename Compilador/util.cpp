@@ -91,11 +91,5 @@ vector<string> read_tokens()
         }
     }
 
-    // Imprimir apenas para "debug"
-    for (const auto& token : tokens) 
-    {
-        cout << token << endl;
-    }
-
     return tokens;
 }

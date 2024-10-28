@@ -5,7 +5,7 @@
 using namespace std;
 
 bool eh_identificador(const string& palavra) {
-    regex padrao_identificador(R"(^[a-zA-Z_]\w*$)");
+    regex padrao_identificador(R"(^\$[a-zA-Z_]\w*$)");
     return regex_match(palavra, padrao_identificador);
 }
 
@@ -14,7 +14,7 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
     unordered_map<string, int> identificadores;
 
     // Regex para identificar tokens
-    regex padrao_tokens(R"("(?:\\\"|[^"])*?"|\w+|[^\w\s"])");
+    regex padrao_tokens(R"(<\?php|\?>|\$[a-zA-Z_]\w*|=|echo|if|else|\(|\)|;)");
 
     size_t linha_numero = 0;
     string linha;
@@ -29,8 +29,8 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
             string palavra = it->str();
 
             // Verificar a categoria da palavra
-            if (palavra == "start" || palavra == "end" || palavra == "var" || palavra == "read" ||
-                palavra == "write" || palavra == "if" || palavra == "then" || palavra == "(" ||
+            if (palavra == "<?php" || palavra == "?>" || palavra == "$" || palavra == "=" ||
+                palavra == "echo" || palavra == "if" || palavra == "else" || palavra == "(" ||
                 palavra == ")" || palavra == ":" || palavra == ";") {
                 linha_tokens.push_back("[" + palavra + ", ]");
             }
@@ -47,7 +47,7 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
             else if (palavra == "+" || palavra == "-" || palavra == "*" || palavra == "/") {
                 linha_tokens.push_back("[om, " + palavra + "]");
             }
-            else if (palavra == "and" || palavra == "or" || palavra == "not") {
+            else if (palavra == "&&" || palavra == "||" || palavra == "!") {
                 linha_tokens.push_back("[cl, " + palavra + "]");
             }
             else if (eh_identificador(palavra)) {

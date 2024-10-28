@@ -16,9 +16,9 @@ int main()
 
 		auto tokens_1 = read_tokens();
 	}
-	catch (const exception&)
+	catch (const exception& e)
 	{
-		cout << "Erro durante analise léxica: ";
-		throw exception();
+		cout << "Erro durante analise léxica: " << e.what() << endl;
+		throw;
 	}
 }
