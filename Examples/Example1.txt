@@ -1,0 +1,15 @@
+<?php
+
+$x = 0;
+$numa = 0;
+
+echo "Entre um número: ";
+$numa = readline();
+
+$x = 10;
+
+if ($numa < 1 || $numa < 2) {
+    echo "Unidade é: ";
+    echo $numa + 1;
+}
+?>
