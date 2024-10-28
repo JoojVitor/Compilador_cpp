@@ -79,9 +79,10 @@ vector<string> read_tokens()
                 {
                     token = token.substr(0, comma_pos);  // Pegar apenas a primeira parte do token
                 }
-                // Remover espaços ao redor do token e adicionar à lista
+
                 token.erase(0, token.find_first_not_of(" \n\r\t"));
                 token.erase(token.find_last_not_of(" \n\r\t") + 1);
+
                 if (!token.empty()) 
                 {
                     tokens.push_back(token);
@@ -90,6 +91,7 @@ vector<string> read_tokens()
         }
     }
 
+    // Imprimir apenas para "debug"
     for (const auto& token : tokens) 
     {
         cout << token << endl;
