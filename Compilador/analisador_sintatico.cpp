@@ -43,18 +43,17 @@ void parse_declarations()
 
 void parse_expression()
 {
-    // Tratar um número inteiro, variável ou chamada para readline()
     if (tokens[current_token_index] == "id")
     {
         match("id");
     }
     else if (tokens[current_token_index] == "nu")
     {
-        match("nu");  // Números inteiros
+        match("nu");
     }
     else if (tokens[current_token_index] == "fr")
     {
-        match("fr");  // Números inteiros
+        match("fr");
     }
     else if (tokens[current_token_index] == "readline")
     {
@@ -62,15 +61,14 @@ void parse_expression()
         match("(");
         if (tokens[current_token_index] == "fr")
         {
-            match("fr");  // String de prompt opcional
+            match("fr");
         }
         match(")");
     }
 
-    // Verificar operadores matemáticos após o valor inicial
     while (tokens[current_token_index] == "om")
     {
-        match("om");  // Operador matemático
+        match("om");
         if (tokens[current_token_index] == "id")
         {
             match("id");
@@ -88,21 +86,20 @@ void parse_expression()
 
 void parse_condition()
 {
-    parse_expression();  // Condição antes do operador
+    parse_expression();
 
-    // Permitir operadores relacionais e lógicos após a primeira expressão
     while (tokens[current_token_index] == "ol" || tokens[current_token_index] == "cl")
     {
         if (tokens[current_token_index] == "ol")
         {
-            match("ol");  // Operador relacional
+            match("ol"); 
         }
         else if (tokens[current_token_index] == "cl")
         {
-            match("cl");  // Operador lógico
+            match("cl");
         }
 
-        parse_expression();  // Condição depois do operador
+        parse_expression();
     }
 }
 
@@ -121,7 +118,7 @@ void parse_statement()
         }
         parse_expression();
 
-        match(";");  // Final da instrução
+        match(";");
     }
     else if (tokens[current_token_index] == "readline")
     {
@@ -129,7 +126,7 @@ void parse_statement()
         match("(");
         if (tokens[current_token_index] == "fr")
         {
-            match("fr");  // String de prompt opcional
+            match("fr");
         }
         match(")");
         match(";");
@@ -140,16 +137,16 @@ void parse_statement()
         match("(");
         parse_condition();
         match(")");
-        match("{");  // Início do bloco de código
+        match("{");
         parse_statements();
-        match("}");  // Fim do bloco
-        // Verifica se há um "else" após o bloco "if"
+        match("}");
+
         if (current_token_index < tokens.size() && tokens[current_token_index] == "else")
         {
             match("else");
-            match("{");  // Início do bloco de código para else
+            match("{");
             parse_statements();
-            match("}");  // Fim do bloco
+            match("}");
         }
     }
     else if (tokens[current_token_index] == "id")
@@ -157,7 +154,7 @@ void parse_statement()
         match("id");
         match("=");
         parse_expression();
-        match(";");  // Final da atribuição
+        match(";");
     }
 }
 
@@ -176,8 +173,8 @@ void parse_statements()
 void parse_program(vector<string> _tokens)
 {
     tokens = _tokens;
-    match("<?php");  // Início do código PHP
+    match("<?php");
     parse_declarations();
     parse_statements();
-    match("?>");  // Fim do código PHP
+    match("?>");
 }
