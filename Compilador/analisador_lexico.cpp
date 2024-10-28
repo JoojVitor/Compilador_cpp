@@ -4,13 +4,11 @@
 
 using namespace std;
 
-// Função auxiliar para verificar identificadores
 bool eh_identificador(const string& palavra) {
     regex padrao_identificador(R"(^[a-zA-Z_]\w*$)");
     return regex_match(palavra, padrao_identificador);
 }
 
-// Função para analisar o código de entrada
 vector<vector<string>> analisador_lexico(const string& codigo) {
     vector<vector<string>> tokens;
     unordered_map<string, int> identificadores;
@@ -18,7 +16,6 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
     // Regex para identificar tokens
     regex padrao_tokens(R"("(?:\\\"|[^"])*?"|\w+|[^\w\s"])");
 
-    // Iterar sobre cada linha do código de entrada
     size_t linha_numero = 0;
     string linha;
     istringstream stream(codigo);
@@ -27,7 +24,6 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
         linha_numero++;
         vector<string> linha_tokens;
 
-        // Iterar sobre cada palavra identificada na linha
         for (auto it = sregex_iterator(linha.begin(), linha.end(), padrao_tokens);
             it != sregex_iterator(); ++it) {
             string palavra = it->str();
@@ -70,7 +66,6 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
             }
         }
 
-        // Adicionar os tokens da linha à lista de tokens
         tokens.push_back(linha_tokens);
     }
 
@@ -80,19 +75,15 @@ vector<vector<string>> analisador_lexico(const string& codigo) {
 void executar()
 {
     try {
-        // Ler o arquivo de entrada
-        std::string text = ler_arquivo("entrada.txt");
+        string text = ler_arquivo("entrada.txt");
 
-        // Remover comentários
         text = remover_comentarios(text);
 
-        // Analisar léxico
         auto tokens = analisador_lexico(text);
 
-        // Escrever resultados em arquivo
         escrever_saida_em_arquivo(tokens);
     }
-    catch (const std::exception& e) {
-        std::cerr << "Erro durante a análise léxica: " << e.what() << std::endl;
+    catch (const exception& e) {
+        cerr << "Erro durante a análise léxica: " << e.what() << endl;
     }
 }

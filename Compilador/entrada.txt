@@ -1,0 +1,11 @@
+start
+  var x;
+  var numa;
+  write ("entre um numero");
+  read (numa);
+  x:10;
+  if (numa<1 or numa<2)
+  then
+    write ("Unidade e:");
+    write (numa);
+end
