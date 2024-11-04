@@ -9,7 +9,7 @@ using namespace std;
 vector<string> tokens;
 int current_token_index = 0;
 
-std::string get_next_token()
+string get_next_token()
 {
     if (current_token_index < tokens.size())
     {
@@ -18,16 +18,16 @@ std::string get_next_token()
     return "";  // Retorna string vazia para indicar o fim
 }
 
-void match(const std::string& expected_token)
+void match(const string& expected_token)
 {
-    std::string token = get_next_token();
+    string token = get_next_token();
     if (token.empty())
     {
-        throw std::runtime_error("Erro de sintaxe: Fim de arquivo inesperado");
+        throw runtime_error("Erro de sintaxe: Fim de arquivo inesperado");
     }
     if (token != expected_token)
     {
-        throw std::runtime_error("Erro de sintaxe: Esperado " + expected_token + ", encontrado " + token);
+        throw runtime_error("Erro de sintaxe: Esperado " + expected_token + ", encontrado " + token);
     }
 }
 
@@ -79,7 +79,7 @@ void parse_expression()
         }
         else
         {
-            throw std::runtime_error("Erro de sintaxe: Valor esperado após operador matemático, encontrado " + tokens[current_token_index]);
+            throw runtime_error("Erro de sintaxe: Valor esperado apÃ³s operador matemÃ¡tico, encontrado " + tokens[current_token_index]);
         }
     }
 }
